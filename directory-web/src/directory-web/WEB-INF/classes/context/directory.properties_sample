@@ -1,0 +1,394 @@
+directory.version.description=Directory version : 2.0.9.38
+
+# 주의사항)
+# - 일부 WAS의 경우 directory.basedir 디렉토리가 WAS 에 deploy된 directory-web의 하부 디렉토리 인경우 deploy 가 새로 될때마다
+#   해당 디렉토리가 초기화되는 경우가 있다. 그러므로 다시 deploy 할경우 directory.basedir를 반드시 backup 한후 진행해야한다.
+# - In the some WAS, if there is the "directory.basedir" in the deployed folder in the WAS's context, the folder is initialized
+#   Therefor, the folder must be backed up and then process to redeploy.
+# 조직도 파일을 위한 기본 디렉토리. directory-web 이 deploy 된 디렉토리하부가 아닌경우 
+# 반드시 deploy 된 하부디렉토리에 link 를 설정해야한다. eg) ln -s <directory.basedir> <context-dir>/directory
+# the base directory(folder) for the directory framework. You must set the link to the child folder("directory")
+# of the deployed folder of the directory-web. eg) ln -s <directory.basedir> <context-dir>/directory
+directory.basedir=C:/dev/apache-tomcat-5.5.34/webapps/directory-web/directory
+directory.orgfolder.basedir=${directory.basedir}/data
+#암호화를 적용할지 여부. 1이면 사용 1이 아니면 사용안함(로그인시 이름 및 암호에 대한 암호화 전송여부)
+#directory.crypt.pwcrypt=1
+# UC 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# Whether use the function for the UC or not. true : use, false : not use(default)
+#directory.use.uc=false
+# 외부사용자 기능 사용여부, true:사용함, false:사용안함(default)
+# 해당기능을 사용할경우 조직도관리 혹은 조직도 Import 시 사용자추가의 경우 기본으로 내부사용자 권한을 추가한다.  
+#directory.use.externaluser=false
+# 외부사용자를 소속시킬 루트부서ID
+#directory.external.rootdeptid=
+
+# 업로드 파일 최대 크기, default 1048576
+#directory.upload.maxsize=1048576
+
+# 사용자의 default password 값(default 는 1) 
+# A user's default password(default is 1)
+directory.password.defaultpassword=1
+# 패스워드 암호화 사용 여부, true : 사용함, false : 사용안함(default) 
+# Whether use the password crypt or not. true : use, false : not use(default)
+#directory.password.crypt=false
+# 패스워드 암호화를 사용하는 경우, 암호화 클래스 지정. 암호화 클래스는 반드시 com.hs.framework.crypt.common.CodeCrypt 인터페이스를 구현해야 한다.
+# Define the crypt class for the password crypt, the class must implement the com.hs.framework.crypt.common.CodeCrypt.
+# - Default : com.hs.framework.crypt.common.DefaultCodeCrypt
+# - GW      : com.hs.framework.crypt.common.GWCodeCrypt
+# - MD5     : com.hs.framework.directory.common.crypt.MD5Crypt
+# - SHA-256 : com.hs.framework.directory.common.crypt.SHA256Crypt
+# - SHA-256(Base64) : com.hs.framework.directory.common.crypt.SHA256Base64Crypt
+# - SHA-512 : com.hs.framework.directory.common.crypt.SHA512Crypt
+#directory.password.cryptclass=com.hs.framework.crypt.common.GWCodeCrypt
+# 패스워드 암호화를 사용하는 경우, 배치처리에 패스워드 암호화 적용 여부, true : 적용함(default), false : 적용안함
+# ex) 사용자 CSV 파일을 import/export 하는 경우, 다음과 같이 동작한다.
+# - true : (import) 패스워드를 암호화하여 DB 에 insert 한다.
+#          (export) DB 에 있는 패스워드를 복호화하여 출력한다. (복호화를 지원하지 않는 암호화 클래스를 사용하는 경우, 암호화된 값 출력)
+# - false : (import) 패스워드를 그대로 DB 에 insert 한다. (CSV 파일에 암호화된 패스워드를 사용할 경우에 사용)
+#           (export) DB 에 있는 패스워드를 그대로 출력한다.
+#directory.password.crypt.batch=true
+
+# 사원번호 허용여부,  default 는 false, 사원번호를 암호로 허용하지 않음
+# Whether to allow the employee number(empcode), default is false
+#directory.password.rule.allowempcode=false
+# 사용자이름(영문포함) 허용여부,  default 는 false, 사용자이름을 암호로 허용하지 않음
+# Whether to allow the user name, default is false
+#directory.password.rule.allowname=false
+# 최소 암호 길이, default 는 0 이며, 0 인경우 길이 제한을 두지 않는다.
+# The minimum length of the password, default is 0, 0 means that don't check the length of the password
+#directory.password.rule.minlength=0
+# 최소 숫자 갯수, default 는 0 이며, 0인경우 숫자갯수를 검사하지 않는다.
+# The minimum count of the numbers, default is 0, 0 means that don't check the count of the numbers
+#directory.password.rule.minnumberlength=0
+# 최소 문자 갯수, default 는 0 이며, 0인경우 문자 갯수를 검사하지 않는다.
+# The minimum count of the characters, default is 0, 0 means that don't check the count of the characters
+#directory.password.rule.mincharacterlength=0
+# 최소 특수문자 갯수, default 는 0이며, 0인경우 특수문자갯수를 검사하지 않는다.
+# The minimum count of the special characters. default is 0, 0 means that dont's check the count of the special characters.
+#directory.password.rule.minspeicalcharacterlength=0
+# 연속된 문자 허용여부,숫자오름차순 허용여부, 숫자 내림차순 허용여부, 영문자 오름차순 허용여부, 영문자 내림차순 허용여부. default 는 true, 연속문자 허용
+# Whether to allow the continuous characters for the password, allow the ascending/descending numbers, ascending/descending alphabetic characters. default is true, allow the continuous characters.
+#directory.password.rule.allowcontinuouscharacter=true
+# 최소 대문자 갯수, default 는 0 이며, 0인경우 문자 갯수를 검사하지 않는다.
+# The minimum count of the upper characters, default is 0, 0 means that don't check the count of the upper characters
+#directory.password.rule.minuppercharacterlength=0
+# 최소 소문자 갯수, default 는 0 이며, 0인경우 문자 갯수를 검사하지 않는다.
+# The minimum count of the lower characters, default is 0, 0 means that don't check the count of the lower characters
+#directory.password.rule.minlowercharacterlength=0
+# 복합암호 검사 정책중 적용할 갯수 지정 , default 는 0 이며, 0인경우 복합암호 검사하지 않는다. 1 ~ 4 의 값을 지정 할수 있다. 
+# Specify the count for the complex type of the password check rule. default is 0, 0 means that don't check the complex type. the valid value is '1' ~ '4'.
+#directory.password.rule.complextype.count=3
+# 복합암호 검사 정책들을 지정, 지정 가능한 값은 'U', 'L', 'N', 'S' 이며 ','(쉼표)를 구분자로 한다.
+# U : 대문자 포함 , L : 소문자 포함, N : 숫자 포함, S : 특수문자 포함
+# Specify the complex types of the password check rule with delimiter(,).
+# U : upper character including, L : lower character including, N : number including, S : special character including
+#directory.password.rule.complextype=U,L,N,S
+
+# 부서내의 사용자들과 사용자 검색시 목록 순서를 지정한다. 
+# - pos : 직위순(디폴트값) 으로 정렬, 보안등급(직위등급순) > 순번 > 이름 의 순으로 정렬 
+# - seq : 순번으로 정렬, 순번 > 보안등급(직위등급순) > 이름 의 순으로 정렬
+# - sec_level : 보안등급(직위등급순) > 이름
+# This options support to order the users of the department and the users to be searched.
+# - pos : order by the "Position"(default) , Position(Position's Security Level) > User's sequence > User's name in order 
+# - seq : order by user's sequence, user's sequence > Position(Position's Security Level) > User's name in order
+# - sec_level : Position's Security Level > User's name
+#directory.listusers.order=pos
+
+# 조직도 팝업창에서 사용자 상세정보 링크를 사용할지 여부, true : 사용함(default), false : 사용안함 
+# Whether use the link for the user's detail or not on the directory popup. true : use(default), false : not use
+directory.use.detailuser=true
+
+# 사용자 상세정보 팝업 커스터마이징을 위한 JavaScript 소스 URL
+# JavaScript source url for customizing the user's detail popup
+# ex) /js/uc/accuzone_uc_jQ.js
+#directory.detailuser.src=
+
+# 사용자 상세정보 팝업 커스터마이징을 위한 JavaScript 명령어
+# 값이 없으면, Directory의 사용자 상세정보 팝업이 실행된다.
+# JavaScript commands for customizing the user's detail popup
+# If the value is empty, the user's detail popup of Directory is executed.
+# ex) saveMousePosition(event); show_user_info(userID);
+#directory.detailuser.cmd=
+
+# 알림 사용여부, true : 사용함, false : 사용안함(default)
+# - 환경설정 > 알림설정 (show/hide)
+# Whether to use the alert. true : use, false : not use(default)
+#directory.use.notify=false
+
+# 게시판 사용여부, true : 사용함, false : 사용안함(default)
+# - 환경설정 > 알림설정 > 게시판 (show/hide)
+# Whether to use the bulletin board. true : use, false : not use(default)
+#directory.use.bbs=false
+
+# 조직도에서 메일 관련 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# - 환경설정 > 부재설정 > 메일설정 (show/hide)
+# - 조직도 관리 > 사용자 추가/변경/조회 > 메일용량 (show/hide)
+# Whether use the function for the mail or not on the directory. true : use, false : not use(default)
+#directory.use.mail=false
+# 사용자의 메일 용량 기본값(default 는 100)
+# A user's default mail capacity(default is 100)
+# ex) 0 ~ 99999 까지의 숫자
+#directory.mail.defaultCapacity=100
+
+# 직급 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# Whether use the function for the rank or not. true : use, false : not use(default)
+#directory.use.rank=false
+# 직책 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# Whether use the function for the duty or not. true : use, false : not use(default)
+#directory.use.duty=false
+# 사용자그룹(계층,공용) 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# Directory 컴포넌트는 두 가지 종류의 사용자그룹을 제공하며, 설정값에 따라  하나의 사용자그룹이 활성화된다.
+# - true : 사용자그룹(계층,공용) 활성화, dir_group 테이블 사용
+# - false : 사용자그룹(개인) 활성화, usr_group 테이블 사용
+#directory.use.dirgroup=false
+
+# 배치 import 를 사용할지 여부(false : 사용안함, true : 사용함)
+# Whether use the batch import for the organization or not(false : not use, true : use)
+directory.batch.import.use=false
+# 배치 import 를 위한 파일 디렉토리
+# Base Directory for the files of the batch import
+directory.batch.import.dir=${directory.basedir}/import
+# 배치 import 처리시 원본 파일과 오류 로그 파일이 위치할 기본 디렉토리
+# If the error occur, locate the original file and log file in that directory's sub.
+directory.batch.import.error=${directory.basedir}/error
+# 배치 처리시 사용자 삭제인경우 삭제 처리할지 아니면 상태만 변경할지 여부(true : 삭제(기본값), false : 상태만 '삭제'로 변경)
+# Whether the user is deleted or the user's status is changed into 'DELETED' in the batch processing for the organization.(true: deleted(default), false : changed) 
+directory.batch.delete.user=true
+# 배치 처리시 부서 삭제인경우 삭제 처리할지 아니면 상태만 변경할지 여부(true : 삭제(기본값), false : 상태만 '삭제'로 변경)
+# Whether the department is deleted or the user's status is changed into 'DELETED' in the batch processing for the organization.(true: deleted(default), false : changed)
+directory.batch.delete.dept=true
+#조직도 CSV Export/Import시 사용할 문자셋 목록("," 구분자). 문자셋이 추가되는 경우 언어별 리소스 파일에도 추가되어야 한다.
+#list the charsets to be supported for exporting/importing CSV of the organization("," delimiter). If the charset(s) is added, the language string is added in the resource files of the languages.
+directory.batch.csv.charset=utf-8,us-ascii,euc-kr,euc-jp
+# 조직도 Export 시 추가로 Export 할 컬럼들 지정("," 구분자)
+# set the additional columns for exporting the organization("," delimiter)
+directory.export.dept.addcolumns=
+directory.export.user.addcolumns=
+
+# 사용자의 비밀번호에 대한 이력관리기능 사용시 관리할 이력의 건수 지정하며, 건수가 1이상인 경우 사용자가 비밀번호지정시 이력에 등록된 비밀번호는 사용하지 못하도록 제한한다.
+# - 0, 없음 : 이력관리를 하지않는다.
+# - 1 이상 : 관리할 비밀번호의 이력 건수 및 사용자가 비밀번호지정시 이력에 등록된 비밀번호는 사용하지 못하도록 제한한다.
+# set the max count for the history of the passwords.	 * If the value is more than "1", The users can't set the password in the history as the new password.
+# - 0 or nothing : don't use the history for the passwords.
+# - more than "1" :  the max count for the history of the passwords and users can't set the password in the history as the new password.
+#directory.password.history.maxcount=10
+# 사용자의 비밀번호 변경주기 일자. 사용자가 비밀번호를 변경하고 지정된 날자가 지난경우 로그인시 비밀번호를 변경하도록 한다.
+# 값)
+# - 0, 없음 : 비밀번호 변경주기 일자를 사용하지 않는다.
+# - 1 이상 : 비밀번호 변경주기 일자를 지정한 날자로 사용한다.(단위 : 일)
+# Users must change the password on the number of days after they changed that.
+# Value)
+# - 0 or nothing : don't use this function.
+# - more than '1' : After the number of value(days), users must change the password.
+#directory.password.changedays=30
+
+# 조직도의 정보를 암호화하는경우 암호화 클래스 지정.
+# define the encryption class for the information encryption
+#directory.crypt.cryptclass=com.hs.framework.crypt.common.GWCodeCrypt
+# 사용자 정보중 암호화할 컬럼을 지정한다. 암호화를 지정하는 컬럼은 phone,e_mail,mobile_phone 이며 암호화된 컬럼은 검색을 지원하지 않는다.
+# specify the columns to be encoded for user's information encryption. Only 3 columns(phone,e_mail,mobile_phone) is supported to be done.
+# And the encoded columns can't be supported to be searched.
+#directory.crypt.user.columns=phone,e_mail,mobile_phone
+
+# 사용자/부서의 이메일 중복 검사 여부, true : 검사, false : 검사안함(default)
+# - true : 이미 존재하는 이메일을 사용하여 사용자/부서를 생성할 수 없다.
+# - false : 이미 존재하는 이메일을 사용하여 사용자/부서를 생성할 수 있다.
+#directory.email.rule.duplicate=false
+# 전체커뮤니티에서 사용자/부서의 이메일 중복 검사 여부, true : 검사, false : 검사안함(default)
+#directory.email.rule.duplicate.multicommunity=false
+# 사용자의 이메일 필수 입력 여부, true : 필수, false : 필수아님(default)
+#directory.email.rule.required=false
+
+# 중복 로그인 허용 여부, true : 허용, false : 허용안함(default)
+# Whether allow the duplication login or not. true : allow, false : not allow(default)
+#directory.login.allowduplogin=false
+
+# 인증된 서버에서  로그인암호 없이 특정 사용자로 로그인하기 위한 기능이다. ex) UC-웹메일 연계
+# 인증IP 목록 (구분자는 ";" 또는 ",")
+#directory.login.cert.ips=127.0.0.1;
+# 인증키
+#directory.login.cert.key=handy
+
+#현재 사용하는 DB에서 지원하는 REPLACE 함수를 정의(Oracle, MSSQL, MySQL에서 지원)
+#define the REPLACE function supported by the current Database, the function is supported by Oracle, MSSQL, MySQL. 
+directory.db.function.replace=REPLACE({0},?,?)
+
+#전화번호에 포함된 문자들중 삭제할 문자들(-, ,)) 정의, 이는 전화번호 검색시 사용됨
+#define the chars include the delimiter(",") to be removed in the case of searching the phone number(phone, mobile_phone of usr_global) 
+directory.phone.removechars=-, ,)
+
+#인사DB 연동시 직위명 중복검사에서 영문이름 포함할지 여부(true : 포함(default), false: 포함안함)
+#In the case of linkage with HR DB, whether or not to include the duplication check for position name in English(name_eng).
+directory.pos.dupcheck.name_eng=true
+
+# 조직도에서 클라우드폴더 관련 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# - 조직도 관리 > 사용자 추가/변경/조회 > 클라우드폴더용량 (show/hide)
+# Whether use the function for the cloudfolder or not on the directory. true : use, false : not use(default)
+#directory.use.cloudfolder=false
+
+# 사용자의 클라우드폴더 용량 기본값(default 는 3072)
+# A user's default coludfolder capacity(default is 3072)
+# ex) 0 ~ 99999 까지의 숫자
+#directory.cloudfolder.defaultCapacity=3072
+
+# 연동계정설정 사용할지 여부 기본값(default: false)
+# Whether use the linkage account or not on the directory. true : use, false : not use(default)
+#directory.use.linkageaccount=false
+
+# 연동계정설정에서 사용한 연동 시스템 목록 기본값(default: google)
+# set the linkage systems' list with delimiter ',' for the linkage accounts 
+#directory.linkageaccount.linkageNames=google
+
+#사용자 이름에 "."(period)를 허용할지 여부(default : false)
+# false :  "."(period)를 허용안함
+# true : "."(period)를 허용
+#directory.allow.period.in.username=false
+
+# 조직도에서 지원하는 locale 리스트(구분자는 ",")
+# list of supported locale on the directory(delimiter ',')
+directory.locale.support=ko_KR,en_US,ja_JP
+
+# 커뮤니티요청 기능을 사용할지 여부, true : 사용함, false : 사용안함(default)
+# Whether use the function for the communityRequest or not. true : use, false : not use(default)
+#directory.use.communityRequest=false
+
+# SSO와 관련하여 허용하는 IP(또는 hostname) 리스트(구분자는 ",")
+# IP(or hostname) list which allows in relation to the SSO(delimiter ',')
+#directory.sso.hosts=127.0.0.1
+
+# 인사DB 연동 기능을 사용하는 커뮤니티ID 목록 (구분자는 ";" 또는 ",")
+#directory.linkage.communityIDs=001000000;
+
+############################## 각 커뮤니티의 인사DB 연동 설정 : START ##############################
+
+# 부서/사용자의 삭제 가능 백분율 (default 는 20)
+# - 삭제 대상 부서(또는 사용자)가 전체 부서(또는 사용자)의 n%를 초과할 경우, 오류로 판단하고 연동 작업을 취소한다.
+# - 의도하지 않은 대량 삭제를 방지하기 위한 옵션이다.
+# ex)
+#  1. 100 으로 설정 : 모든 삭제 대상을 삭제 처리한다.
+#  2. 0 으로 설정     : 삭제 대상이 있으면 무조건 오류가 발생한다.
+001000000.linkage.deletePercent=20
+
+# 연동할 최상위 부서의 상위 부서코드(par_code)
+# - 연동할 최상위 부서가 소속될 Directory의 부서코드를 설정한다.
+# ex)
+#  1. 연동할 최상위 부서가 Directory의 root 부서가 되는 경우 (Directory의 root 부서의 부서코드를 최상위 부서의 부서코드로 수정해야 한다)
+#    (1) topParCode : 000000000
+#    (2) 최상위 부서 수 : 반드시 1개
+#  2. 연동할 최상위 부서가 Directory에 존재하는 부서의 하위 부서가 되는 경우
+#    (1) topParCode : Directory에 존재하는 부서의 부서코드
+#    (2) 최상위 부서 수 : 여러개 가능
+001000000.linkage.topParCode=000000000
+
+# 직위(pos) 연동 항목
+# - 필수 : community_id, pos_name, pos_code, sec_level
+# - 전체 : community_id, pos_name, pos_code, sec_level, link_id, pos_name_eng
+001000000.linkage.columns.pos=community_id, pos_name, pos_code, sec_level, pos_name_eng
+
+# 직급(rank) 연동 항목
+# - 필수 : community_id, rank_name, rank_code, rank_level
+# - 전체 : community_id, rank_name, rank_code, rank_level, rank_name_eng
+001000000.linkage.columns.rank=community_id, rank_name, rank_code, rank_level, rank_name_eng
+
+# 직책(duty) 연동 항목
+# - 필수 : community_id, duty_name, duty_code
+# - 전체 : community_id, duty_name, duty_code, seq
+001000000.linkage.columns.duty=community_id, duty_name, duty_code, seq
+
+# 부서(dept) 연동 항목
+# - 필수 : community_id, dept_name, dept_code, par_code
+# - 전체 : community_id, dept_name, dept_code, par_code, seq, status, e_mail, link_id, dept_name_eng
+001000000.linkage.columns.dept=community_id, dept_name, dept_code, par_code, seq, status \
+                               , e_mail, dept_name_eng
+
+# 사용자(user) 연동 항목
+# - 필수 : community_id, name, emp_code, dept_code, pos_name
+# - 전체 : community_id, name, emp_code, dept_code, pos_name, rank_name, duty_name, status, sec_level, seq \
+#         , lock_f, login_passwd, phone, e_mail, mobile_phone, login_id, link_id, expiry_date, business, name_eng \
+#         , fax, client_ip_addr, phone_rule_id, ext_phone, ext_phone_head, ext_phone_exch, phy_phone, fwd_phone
+001000000.linkage.columns.user=community_id, name, emp_code, dept_code, pos_name, rank_name \
+                               , duty_name, status, sec_level, seq \
+                               , lock_f, login_passwd, phone, e_mail, mobile_phone \
+                               , expiry_date, business, name_eng, fax, client_ip_addr, passwd_date
+                               
+# 부재(absence) 연동 항목
+#001000000.linkage.columns.absence=emp_code, abs_sdate, abs_edate, not_sanc_id, abs_msg
+
+# 인사DB 접속 정보
+# - 인사DB에 접속하여 (설정한 각 연동 SQL로) 조직정보를 조회한다.
+# - driverClass 를 설정하지 않으면, 인사DB에 접속하지 않는다.
+001000000.linkage.jdbc.driverClass=oracle.jdbc.driver.OracleDriver
+001000000.linkage.jdbc.driverUrl=jdbc:oracle:thin:@127.0.0.1:1521:ora10g
+001000000.linkage.jdbc.user=handy82
+001000000.linkage.jdbc.password=handy82
+001000000.linkage.jdbc.maxActive=3
+001000000.linkage.jdbc.maxIdle=1
+001000000.linkage.jdbc.maxWait=1
+
+# 직위(pos) 연동 SQL
+001000000.linkage.select.pos=\
+    SELECT community_id, pos_name, pos_code, sec_level, pos_name_eng \
+    FROM pos \
+    WHERE community_id = '001000000' \
+      AND pos_code IS NOT NULL
+
+# 직급(rank) 연동 SQL
+001000000.linkage.select.rank=\
+    SELECT community_id, rank_name, rank_code \
+        , CASE WHEN rank_level IS NULL THEN 10 ELSE rank_level END AS rank_level \
+        , rank_name_eng \
+    FROM rank \
+    WHERE community_id = '001000000' \
+      AND rank_name IS NOT NULL \
+      AND rank_code IS NOT NULL
+
+# 직책(duty) 연동 SQL
+001000000.linkage.select.duty=\
+    SELECT community_id, duty_name, duty_code, seq \
+    FROM duty \
+    WHERE community_id = '001000000' \
+      AND duty_code IS NOT NULL
+
+# 부서(dept) 연동 SQL
+# - 최상위 부서의  par_code는 (위에서 설정한) topParCode와 동일하게 설정해야 한다.
+# - 부서코드가 topParCode와 동일한 부서가 존재하면 오류가 발생한다.
+001000000.linkage.select.dept=\
+    SELECT d.community_id, d.dept_name, d.dept_code \
+        , CASE WHEN p.dept_code IS NULL THEN d.par_id ELSE p.dept_code END AS par_code \
+        , d.seq, d.status, d.e_mail, d.dept_name_eng \
+    FROM dept_global d LEFT OUTER JOIN dept_global p ON d.par_id = p.dept_id \
+    WHERE d.community_id = '001000000' \
+      AND d.dept_code IS NOT NULL \
+      AND (d.par_id = '000000000' OR p.dept_code IS NOT NULL) \
+      AND d.status <> '4'
+
+# 사용자(user) 연동 SQL
+001000000.linkage.select.user=\
+    SELECT u.community_id, u.name, u.emp_code, d.dept_code, p.pos_name \
+        , ra.rank_name, du.duty_name, u.status, u.sec_level, u.seq \
+        , u.lock_f, u.login_passwd, u.phone, u.e_mail, u.mobile_phone \
+        , TO_CHAR(u.expiry_date, 'YYYY-MM-DD') AS expiry_date \
+        , u.business, u.name_eng, u.fax, u.client_ip_addr, TO_CHAR(u.passwd_date, 'YYYY-MM-DD HH24:MI:SS') AS passwd_date \
+    FROM usr_global u \
+        INNER JOIN dept_global d ON u.dept_id = d.dept_id \
+        INNER JOIN pos p ON u.pos_id = p.pos_id \
+        LEFT OUTER JOIN rank ra ON u.rank_id = ra.rank_id \
+        LEFT OUTER JOIN duty du ON u.duty_id = du.duty_id \
+    WHERE u.community_id = '001000000' \
+      AND u.emp_code IS NOT NULL \
+      AND d.dept_code IS NOT NULL \
+      AND (p.pos_name IS NOT NULL AND p.pos_code IS NOT NULL) \
+      AND ((ra.rank_name IS NOT NULL AND ra.rank_code IS NOT NULL) OR ra.rank_name IS NULL) \
+      AND ((du.duty_name IS NOT NULL AND du.duty_code IS NOT NULL) OR du.duty_name IS NULL) \
+      AND u.status <> '4'
+
+# 부재(absence) 연동 SQL
+#001000000.linkage.select.absence=\
+#	SELECT u.emp_Code, TO_CHAR(abs.abs_sdate, 'YYYY-MM-DD HH24:MI') AS abs_sdate, \
+#			TO_CHAR(abs.abs_edate, 'YYYY-MM-DD HH24:MI') AS abs_edate, \
+#			abs.not_sanc_id, abs.abs_msg \
+#	FROM abs_type abs, usr_global u \
+#	WHERE abs.user_id = u.user_id AND u.emp_code IS NOT NULL \
+#	AND abs.abs_edate > sysdate AND u.community_id = '001000000'
+
+############################### 각 커뮤니티의 인사DB 연동 설정 : END ###############################

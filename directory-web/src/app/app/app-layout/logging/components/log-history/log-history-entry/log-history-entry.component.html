@@ -1,0 +1,11 @@
+<div class="log-entry log-{{log.type}}">
+    <div class="log-meta">
+        <mat-icon>chevron_right</mat-icon>
+        <span class="log-initiator">{{ log.initiator.displayName | translate }}</span> at
+        <span class="log-datetime">{{ log.datetime | date:"HH:mm:ss" }} </span>
+        <span class="log-level">[{{ log.type }}]</span>
+    </div>
+    <div class="log-content">
+        <div *ngFor="let message of log.messages">{{ message }}</div>
+    </div>
+</div>

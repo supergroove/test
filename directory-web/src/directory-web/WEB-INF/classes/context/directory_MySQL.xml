@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang.xsd">
+	
+    <bean id="orgDaoFactory" class="com.hs.framework.directory.dao.DAOFactory">
+        <property name="userDAO" ref="orgUserDAO" />
+        <property name="deptDAO" ref="orgDeptDAO" />
+        <property name="groupAppDAO" ref="orgGroupAppDAO" />
+        <property name="groupDAO" ref="orgGroupDAO" />
+        <property name="authDAO" ref="orgAuthDAO" />
+        <property name="contactDAO" ref="orgContactDAO" />
+        <property name="positionDAO" ref="orgPositionDAO" />
+        <property name="rankDAO" ref="orgRankDAO" />
+        <property name="dutyDAO" ref="orgDutyDAO" />
+        <property name="absenceDAO" ref="orgAbsenceDAO" />
+        <property name="authenticationDAO" ref="orgAuthenticationDAO" />
+        <property name="IDDAO" ref="orgIDDAO" />
+        <property name="communityDAO" ref="orgCommunityDAO" />
+        <property name="communityRequestDAO" ref="orgCommunityRequestDAO" />
+        <property name="dirGroupDAO" ref="orgDirGroupDAO" />
+        <property name="linkageAccountDAO" ref="orgLinkageAccountDAO" />
+    </bean>
+    
+    <bean id="orgAbstractDAO" abstract="true">
+		<property name="dataSource" ref="dataSource" />
+		<property name="orgCodeCrypt" ref="orgCodeCrypt"/>
+	</bean>
+    <!-- Directory component's DAO -->
+    <!--bean id="orgUserDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.UserDAOImpl" /-->
+	<bean id="orgUserDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.MySQLUserDaoImpl" >
+		<property name="orgInformationCrypt" ref="orgUserInformationCrypt"/>
+    </bean>
+    <bean id="orgDeptDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.DeptDAOImpl" />
+    <bean id="orgGroupAppDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.GroupAppDAOImpl" />
+    <bean id="orgGroupDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.GroupDAOImpl" />
+    <bean id="orgAuthDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.AuthDAOImpl" />
+    <bean id="orgPositionDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.PositionDAOImpl" />
+    <bean id="orgRankDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.RankDAOImpl" />
+    <bean id="orgDutyDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.DutyDAOImpl" />
+    <bean id="orgAbsenceDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.AbsenceDAOImpl" />
+    <bean id="orgAuthenticationDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.AuthenticationDAOImpl" />
+    <bean id="orgContactDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.ContactDAOImpl" />    
+    <bean id="orgIDDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.IDDAOImpl" />
+    <bean id="orgCommunityDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.CommunityDAOImpl" />
+    <bean id="orgCommunityRequestDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.CommunityRequestDAOImpl" />
+    <bean id="orgDirGroupDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.DirGroupDAOImpl" />
+    <bean id="orgLinkageAccountDAO" parent="orgAbstractDAO" class="com.hs.framework.directory.dao.impl.LinkageAccountDAOImpl" >
+    	<property name="cryptClass" value="com.hs.framework.crypt.common.GWCodeCrypt"/>
+    </bean>
+    
+	<bean id="orgContext" class="com.hs.framework.directory.context.OrgContext" depends-on="orgDaoFactory">
+		<property name="messageSource" ref="orgMessageSource" />
+	</bean>
+	
+	<bean id="orgMessageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>com.hs.framework.directory.resources.exception.messages_directory</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="orgCodeCrypt" class="com.hs.framework.directory.context.OrgCodeCrypt"/>
+
+	<bean id="orgComponentManager" class="com.hs.framework.directory.config.ComponentManager" />
+
+	<bean id="orgUserInformationCrypt" class="com.hs.framework.directory.context.OrgInformationCrypt">
+		<property name="cryptedColumnsProperty" value="directory.crypt.user.columns"/>
+		<property name="cryptClassProperty" value="directory.crypt.cryptclass"/>
+	</bean>
+	
+	<bean id="orgFolder" class="com.hs.framework.directory.context.impl.OrgFolderImpl"/>
+</beans>

@@ -1,0 +1,119 @@
+@charset "utf-8";
+
+/* 달력 스타일 시작 */
+#mcalendar_pop {
+	font-size: 16px;
+	position:absolute;
+	left: 110px;
+	top: 100px;
+	width: 190px;
+	z-index: 100;
+	visibility: visible;
+}
+
+.pop_mm {
+	font-family: Arial, Verdana, Meiryo, MS Gothic, Dotum, Gulim, sans-serif;
+	width: 190px;
+	font-size: 25px !important;
+	color: #363636;
+	padding: 5px 0 5px 0px;
+	float: left;
+	background: url(../images/mcal_bg.gif) no-repeat;
+	height: 25px
+}
+
+.pop_mm span.pop_mm_year {
+	font-size: 14px;
+	padding: 0 0 0 25px;
+	vertical-align: middle;
+	line-height: 8px
+}
+
+* html .close img {
+	margin-left: 10px;
+}
+
+.pop_mm .close img {
+	padding-left /**/: 20px;
+	vertical-align: top;
+	_padding-left: 6px;
+}
+
+.pop_mm span.pop_mm_year a {
+	_font-size: 9px;
+}
+
+.pop_mm #backCal{
+	margin-left: 8px;
+}
+
+table#mcalendar {
+	width: 190px;
+	border: 1px solid #b7b7b7;
+	font-size: 0.75em;
+	border-collapse: collapse;
+	float: left;
+}
+
+#mcalendar thead th {
+	font-weight: lighter;
+	background: #f7f7f7;
+	height: 17px;
+	padding: 3px 0 0 0
+}
+
+#mcalendar tbody td {
+	width: 25px;
+	height: 17px;
+	border-top: 1px solid #ccc;
+	border-right: 1px solid #e1e1e1;
+	text-align: center;
+	padding: 0;
+	color: #707070;
+	background: #fff
+}
+
+#mcalendar tbody td .today{
+	background: url(../images/cal_active_layer.gif) no-repeat;
+}
+
+#mcalendar tbody td a {	
+	padding: 0;
+	color: #707070;
+	height: 18px;	
+}
+
+#mcalendar tbody td a:hover {
+	background: url(../images/cal_over_layer.gif) no-repeat;
+	height: 17px;
+	padding: 0;
+	font-weight: bold
+}
+
+#mcalendar tbody td a.today {	
+	height: 18px;
+	padding: 0;
+	font-weight: bold
+}
+
+#mcalendar tbody td a:active,#mcalendar tbody td a:focus {
+	background: url(../images/cal_over_layer.gif) no-repeat;
+	height: 18px;
+	padding: 0
+}
+
+#mcalendar th.sun,td.sun a {
+	color: #ff6600 !important
+}
+
+#mcalendar th.sat,td.sat a {
+	color: #0066ff !important
+}
+
+#select_year {
+	position:absolute;
+	top: 70px;
+	left: 134px;
+	z-index: 1000;
+}
+/* 달력 스타일 끝 */

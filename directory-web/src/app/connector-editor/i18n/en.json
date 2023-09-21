@@ -1,0 +1,24 @@
+{
+    "CONNECTOR_EDITOR": {
+        "DOWNLOAD_CONNECTOR": "Download connector",
+        "VALIDATE_CONNECTOR": "Validate connector",
+        "SAVE_CONNECTOR": "Save connector",
+        "CONNECTOR_VALID": "Connector is valid",
+        "CONNECTOR_INVALID": "Connector contains validation error(s).",
+        "UPLOAD_SUCCESS": "Connector uploaded",
+        "TABS": {
+            "CONNECTOR_EDITOR": "Connector Editor",
+            "JSON_EDITOR": "JSON Editor"
+        },
+        "ERRORS": {
+            "GET_CONNECTOR": "We hit a problem loading the connector. Try uploading it again."
+        },
+        "DIALOG": {
+            "TITLE": "Connector Editor Settings",
+            "SHOW": "Show connectors with templates on the left sidebar",
+            "CANCEL": "Cancel",
+            "APPLY": "Apply"
+        },
+        "NAME": "Connector Editor"
+    }
+}

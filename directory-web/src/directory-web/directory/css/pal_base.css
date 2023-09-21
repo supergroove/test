@@ -1,0 +1,89 @@
+@charset "utf-8";
+
+.title_s01 {/* 트리구조 타이틀*/
+	overflow: hidden;
+	max-width: 100%;
+	height: 27px;
+	font-size: 1.1em;
+	line-height: 2.0em;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	color: #03438d;
+	margin: 0 0 0 0px;
+	padding: 3px 0px 0px 7px;
+	border-bottom: 1px solid #92b5db;
+	vertical-align: bottom;
+	background: url(../images/blue_th.gif) repeat-x;
+}
+
+.title_s01 span.dot {
+	padding: 0px 5px 0px 17px;
+	padding: 0px 5px 0px 17px \0/IE8+9;
+	line-height: 25px;
+	background: url(../images/title_bullet_02_1.gif) no-repeat;
+}
+
+/* tab */
+.mainTabs {
+	width:100%;
+	background-color:#fff;
+	font-size:12px;
+	border-bottom:1px solid #2f77a3;
+	font-weight:bold;
+	line-height: 17px;
+	overflow:hidden;
+}
+.mainTabs ul {
+	width:781px;
+	margin:0;
+	padding:10px 10px 0 0;
+	list-style:none;
+}
+.mainTabs li {
+	display:inline;
+	margin:0;
+	padding:0;
+}
+.mainTabs DD {
+	float:left;
+	background:url("../images/tableft.gif") no-repeat left top;
+	margin:0;
+	padding:0 0 0 5px;
+	text-decoration:none;
+}
+.mainTabs DD span {
+	float:left;
+	display:block;
+	background:url("../images/tabright.gif") no-repeat right top;
+	padding:5px 12px 3px 8px;
+	color:#000;
+}
+.mainTabs a {
+	color:#000;
+	text-decoration:none;
+}
+.mainTabs a:hover {
+	color:#e0670c;
+}
+.mainTabs a:hover span {
+	color:#FFF;
+}
+.mainTabs a:hover {
+	background-position:0% -42px;
+}
+.mainTabs a:hover span {
+	background-position:100% -42px;
+}
+.mainTabs .selected DD {
+	background-position:0% -42px;
+}
+.mainTabs .selected a {
+	color:#FFF;
+}
+.mainTabs .selected a:hover {
+	color:#e0670c;
+}
+.mainTabs .selected DD span {
+	background-position:100% -42px;
+	color:#FFF;
+}

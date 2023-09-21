@@ -1,0 +1,39 @@
+<adf-sidenav-layout data-automation-id="user-logged-in" #sidenavLayout [sidenavMin]="70" [sidenavMax]="220" [stepOver]="600" [expandedSidenav]="menuOpened$ | async"
+    (expanded)="dispatchToggleMenuAction($event)">
+
+    <adf-sidenav-layout-header>
+        <ng-template let-toggleMenu="toggleMenu">
+            <adf-layout-header title="{{'APP.HEADER.APP_NAME' | translate }}" (clicked)="toggleMenu()">
+                <div class="adf-app-layout-menu-spacer" fxFlex="1 1 auto"></div>
+
+                <router-outlet name="search"></router-outlet>
+
+                <adf-notification-history *ngIf="showNotificationHistory" menuPositionX="before" menuPositionY="above"></adf-notification-history>
+
+                <adf-userinfo></adf-userinfo>
+
+                <ama-header-menu
+                    [showLanguagePicker]="showLanguagePicker"
+                    (logout)="onLogout()"
+                    (openSettings)="onOpenSettings()"
+                    (openAbout)="onOpenAbout()">
+                </ama-header-menu>
+            </adf-layout-header>
+        </ng-template>
+    </adf-sidenav-layout-header>
+
+    <adf-sidenav-layout-navigation>
+        <ng-template>
+            <router-outlet name="navigation"></router-outlet>
+        </ng-template>
+    </adf-sidenav-layout-navigation>
+
+    <adf-sidenav-layout-content>
+        <ng-template>
+            <router-outlet></router-outlet>
+            <ama-editor-footer class="editor-footer"></ama-editor-footer>
+        </ng-template>
+
+    </adf-sidenav-layout-content>
+
+</adf-sidenav-layout>

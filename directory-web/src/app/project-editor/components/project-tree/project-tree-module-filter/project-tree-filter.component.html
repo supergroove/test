@@ -1,0 +1,50 @@
+<mat-expansion-panel class="{{ 'project-tree-filter ' + filter.type }}"
+    [expanded]="expanded"
+    [hideToggle]="true"
+    (opened)="filterOpened(filter.type)"
+    (closed)="filterClosed(filter.type)">
+
+    <mat-expansion-panel-header [attr.data-automation-id]="'project-filter-' + filter.type">
+        <mat-icon class="project-tree-filter__icon filter-icon" *ngIf="!loading; else contentsAreLoading;">
+            {{ filter.icon }}
+        </mat-icon>
+        <span class="project-tree-filter__title">{{ filter.name | translate }}</span>
+        <button mat-icon-button
+            (click)="openModelCreationModal($event)"
+            [title]="'PROJECT_EDITOR.CREATE_NEW' | translate">
+            <mat-icon>add</mat-icon>
+        </button>
+    </mat-expansion-panel-header>
+
+    <div class="project-tree-filter__content" [attr.data-automation-id]="'project-filter-' + filter.type + '-container'">
+        <ng-container *ngIf="contentHasBeenLoaded();">
+            <a mat-button
+                [attr.data-automation-id]="filter.type + '-' + item.id"
+                class="project-tree-filter__button"
+                *ngFor="let item of contents"
+                [routerLink]="[filter.type, item.id]"
+                [routerLinkActive]="['active']"
+                [class.project-tree-filter-global-item]="isScopeGlobal(item)"
+                [title]="item.name">
+
+                <span *ngIf="item.icon" class="project-tree-filter__item_icon {{item.icon}}"></span>
+                <mat-icon *ngIf="!item.icon" class="project-tree-filter__icon">{{ filter.icon }}</mat-icon>
+
+                <span class="{{ 'project-tree-filter__name ' +  filter.type }}">{{ item.name }}</span>
+            </a>
+            <div class="project-tree-filter__no-content" *ngIf="contentsAreEmpty()">
+                {{ 'PROJECT_EDITOR.NO_CONTENT' | translate }}
+            </div>
+        </ng-container>
+        <ama-upload-file-button
+            [attr.data-automation-id]="'upload-' + filter.type"
+            [projectId]="projectId" [type]="filter.type">
+        </ama-upload-file-button>
+    </div>
+</mat-expansion-panel>
+
+<ng-template #contentsAreLoading>
+    <div class="project-tree-filter__spinner">
+        <mat-spinner [diameter]="20" [strokeWidth]="2"></mat-spinner>
+    </div>
+</ng-template>

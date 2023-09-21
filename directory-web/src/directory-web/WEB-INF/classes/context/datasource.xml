@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<!-- oracle sample for the dbcp -->
+	<!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>oracle.jdbc.driver.OracleDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:oracle:thin:@123.212.190.243:1521:ora10g</value>
+		</property>
+		<property name="username">
+			<value>directory</value>
+		</property>
+		<property name="password">
+			<value>directory</value>
+		</property>
+        <property name="maxActive">
+        	<value>10</value>
+        </property>
+        <property name="maxIdle">
+        	<value>5</value>
+        </property>
+        <property name="maxWait">
+        	<value>1000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+        	<value>600000</value>
+        </property>
+	</bean>
+	-->
+    <!-- mysql sample for the dbcp -->
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+        	<value>com.mysql.jdbc.Driver</value>
+		</property> 
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/directory?autoReconnect=true</value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value>minhngoc</value>
+        </property>
+        <property name="maxActive">
+        	<value>10</value>
+        </property>
+        <property name="maxIdle">
+        	<value>5</value>
+        </property>
+        <property name="maxWait">
+        	<value>1000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+        	<value>600000</value>
+        </property>
+    </bean>
+	-->
+    <!-- sample for the jndi --> 
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+	    <property name="jndiName" value="java:/comp/env/DirectoryDataSource" />
+	</bean>
+ </beans>

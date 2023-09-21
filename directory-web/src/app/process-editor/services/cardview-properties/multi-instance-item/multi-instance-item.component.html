@@ -1,0 +1,93 @@
+<div class="multi-instance-block">
+    <mat-form-field>
+        <div class="adf-property-label">{{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.MULTI_INSTANCE.MULTI_INSTANCE_TYPE_NAME' | translate }}</div>
+        <mat-select (selectionChange)="onTypeChange($event.value)"
+                    [(ngModel)]="selectedType"
+                    data-automation-id="multi-instance-field">
+            <mat-option *ngFor="let type of options$ | async" [value]="type.key">
+                {{ type.label | translate }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container [formGroup]="form" *ngIf=" form && selectedType !== 'none'">
+        <mat-form-field>
+            <div class="adf-property-label">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.MULTI_INSTANCE.CARDINALITY_NAME' | translate }}
+            </div>
+            <input (change)="onCardinalityChange($event.target.value)"
+                   formControlName="cardinality"
+                   data-automation-id="cardinality-field"
+                   matInput/>
+            <mat-error *ngIf="cardinality.hasError('message')">
+                {{ cardinality.getError('message') | translate }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="adf-property-label">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.MULTI_INSTANCE.COLLECTION' | translate }}
+            </div>
+            <input (change)="onCollectionExpressionChange($event.target.value)"
+                   formControlName="collectionExpression"
+                   data-automation-id="collection-field"
+                   matInput/>
+            <mat-error *ngIf="collectionExpression.hasError('pattern')">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.INVALID_EXPRESSION' | translate }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="adf-property-label">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.ELEMENT_VARIABLE' | translate }}
+            </div>
+            <input (change)="onElementVariableChange($event.target.value)"
+                   formControlName="elementVariable"
+                   data-automation-id="element-variable-field"
+                   matInput/>
+            <mat-error *ngIf="elementVariable.hasError('message')">
+                {{ elementVariable.getError('message') | translate }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="adf-property-label">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.MULTI_INSTANCE.COMPLETION_CONDITION' | translate }}
+            </div>
+            <input (change)="onCompletionConditionChange($event.target.value)"
+                   formControlName="completionCondition"
+                   data-automation-id="completionCondition-field"
+                   matInput/>
+            <mat-error *ngIf="completionCondition.hasError('pattern')">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.INVALID_EXPRESSION' | translate }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="adf-property-label">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.MULTI_INSTANCE.RESULT_COLLECTION' | translate }}
+            </div>
+            <input (change)="onLoopDataOutputRefChange($event.target.value)"
+                   formControlName="loopDataOutputRef"
+                   data-automation-id="loopDataOutputRef-field"
+                   matInput/>
+            <mat-error *ngIf="loopDataOutputRef.hasError('pattern')">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.INVALID_EXPRESSION' | translate }}
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <div class="adf-property-label">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.MULTI_INSTANCE.RESULT_ELEMENT_VARIABLE' | translate }}
+            </div>
+            <input (change)="onOutputDataItemChange($event.target.value)"
+                   formControlName="outputDataItem"
+                   data-automation-id="outputDataItem-field"
+                   matInput/>
+            <mat-error *ngIf="outputDataItem.hasError('pattern')">
+                {{ 'PROCESS_EDITOR.ELEMENT_PROPERTIES.INVALID_EXPRESSION' | translate }}
+            </mat-error>
+        </mat-form-field>
+
+    </ng-container>
+</div>

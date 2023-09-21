@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang.xsd">
+	
+    <bean id="orgMngDAOFactory" class="com.hs.framework.directory.dao.MngDAOFactory">
+        <property name="userMngDAO" ref="orgUserMngDAO" />
+        <property name="deptMngDAO" ref="orgDeptMngDAO" />
+        <property name="authMngDAO" ref="orgAuthMngDAO" />
+        <property name="positionMngDAO" ref="orgPositionMngDAO" />
+        <property name="rankMngDAO" ref="orgRankMngDAO" />
+        <property name="dutyMngDAO" ref="orgDutyMngDAO" />
+        <property name="userAuthMngDAO" ref="orgUserAuthMngDAO" />
+        <property name="batchMngDAO" ref="orgBatchMngDAO" />
+        <property name="communityMngDAO" ref="orgCommunityMngDAO" />
+        <property name="communityRequestMngDAO" ref="orgCommunityRequestMngDAO" />
+        <property name="dirGroupMngDAO" ref="orgDirGroupMngDAO" />
+        <property name="linkageMngDAO" ref="orgLinkageMngDAO" />
+    </bean>
+    
+    <bean id="orgAbstractMngDAO" abstract="true">
+		<property name="dataSource" ref="dataSource" />
+		<property name="orgCodeCrypt" ref="orgCodeCrypt"/>
+	</bean>
+    <!-- Directory component's DAO -->
+    <bean id="orgUserMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.UserMngDAOImpl" >
+		<property name="orgInformationCrypt" ref="orgUserInformationCrypt"/>
+    </bean>
+    <bean id="orgDeptMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.DeptMngDAOImpl" />
+    <bean id="orgAuthMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.AuthMngDAOImpl" />
+    <bean id="orgPositionMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.PositionMngDAOImpl" />
+    <bean id="orgRankMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.RankMngDAOImpl" />
+    <bean id="orgDutyMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.DutyMngDAOImpl" />
+    <bean id="orgUserAuthMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.UserAuthMngDAOImpl" />
+    <bean id="orgBatchMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.BatchMngDAOImpl" />
+    <bean id="orgCommunityMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.CommunityMngDAOImpl" />
+    <bean id="orgCommunityRequestMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.CommunityRequestMngDAOImpl" />
+    <bean id="orgDirGroupMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.DirGroupMngDAOImpl" />
+    <bean id="orgLinkageMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.LinkageMngDAOImpl" />
+    <!-- Directory component's DAO for GW -->
+    <!--
+    <bean id="orgUserMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWUserMngDAO" >
+		<property name="orgInformationCrypt" ref="orgUserInformationCrypt"/>
+    </bean>
+    <bean id="orgDeptMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWDeptMngDAO" />
+    <bean id="orgAuthMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWAuthMngDAO" />
+    <bean id="orgPositionMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWPositionMngDAO" />
+    <bean id="orgRankMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWRankMngDAO" />
+    <bean id="orgDutyMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWDutyMngDAO" />
+    <bean id="orgUserAuthMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWUserAuthMngDAO" />
+    <bean id="orgBatchMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWBatchMngDAO" />
+    <bean id="orgCommunityMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.GWCommunityMngDAO" />
+    <bean id="orgDirGroupMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.DirGroupMngDAOImpl" />
+    <bean id="orgLinkageMngDAO" parent="orgAbstractMngDAO" class="com.hs.framework.directory.dao.impl.LinkageMngDAOImpl" />
+    -->
+	<bean id="orgMngContext" class="com.hs.framework.directory.context.OrgMngContext" depends-on="orgMngDAOFactory">
+		<property name="orgContext" ref="orgContext" />
+		<property name="messageSource" ref="orgMngMessageSource" />
+		<property name="orgFolder" ref="orgFolder"/>
+		<!-- example for organization linkage -->
+		<!--
+		<property name="userLinks">
+			<list>
+				<bean class="com.hs.framework.directory.linkage.UserObjectLink"></bean>
+				<bean class="com.hs.framework.directory.linkage.mail.MailUserObjectLink"></bean>
+			</list>
+		</property>
+		<property name="deptLinks">
+			<list>
+				<bean class="com.hs.framework.directory.linkage.UserObjectLink"></bean>
+				<bean class="com.hs.framework.directory.linkage.mail.MailDeptObjectLink"></bean>
+			</list>
+		</property>
+		<property name="posLinks">
+			<list>
+				<bean class="com.hs.framework.directory.linkage.UserObjectLink"></bean>
+			</list>
+		</property>
+		-->
+	</bean>
+	
+	<bean id="orgMngTranslator" class="com.hs.framework.directory.common.Translator">
+		<property name="messageSource" ref="orgMngMessageSource" />
+	</bean>
+	
+	<bean id="orgMngMessageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>com.hs.framework.directory.resources.exception.messages_directory</value>
+				<value>com.hs.framework.directory.resources.messages_directory</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="orgUserInformationCrypt" class="com.hs.framework.directory.context.OrgInformationCrypt">
+		<property name="cryptedColumnsProperty" value="directory.crypt.user.columns"/>
+		<property name="cryptClassProperty" value="directory.crypt.cryptclass"/>
+	</bean>
+</beans>

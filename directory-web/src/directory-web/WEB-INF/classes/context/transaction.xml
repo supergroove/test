@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+    
+	<tx:advice id="txOrgMngAdvice" transaction-manager="transactionManager"> 
+		<tx:attributes> 
+			<tx:method name="*" rollback-for="Exception"/> 
+		</tx:attributes> 
+	</tx:advice> 
+	<tx:advice id="txOrgAdvice" transaction-manager="transactionManager"> 
+		<tx:attributes> 
+			<tx:method name="*" rollback-for="Exception"/> 
+		</tx:attributes> 
+	</tx:advice> 
+	<aop:config> 
+		<aop:pointcut id="requiredOrgMngTx" expression="execution(* com.hs.framework.directory.context.OrgMngContext.add*(..)) || execution(* com.hs.framework.directory.context.OrgMngContext.delete*(..)) || execution(* com.hs.framework.directory.context.OrgMngContext.move*(..)) || execution(* com.hs.framework.directory.context.OrgMngContext.parseFileOnline(..)) || execution(* com.hs.framework.directory.context.OrgMngContext.process*(..)) || execution(* com.hs.framework.directory.context.OrgMngContext.run*(..)) || execution(* com.hs.framework.directory.context.OrgMngContext.update*(..))"/> 
+		<aop:advisor advice-ref="txOrgMngAdvice" pointcut-ref="requiredOrgMngTx" /> 
+	</aop:config> 
+	<aop:config> 
+		<aop:pointcut id="requiredOrgTx" expression="execution(* com.hs.framework.directory.context.OrgContext.set*(..)) || execution(* com.hs.framework.directory.context.OrgContext.create*(..)) || execution(* com.hs.framework.directory.context.OrgContext.login*(..)) || execution(* com.hs.framework.directory.context.OrgContext.add*(..)) || execution(* com.hs.framework.directory.context.OrgContext.change*(..)) || execution(* com.hs.framework.directory.context.OrgContext.delete*(..)) || execution(* com.hs.framework.directory.context.OrgContext.logout*(..)) || execution(* com.hs.framework.directory.context.OrgContext.process*(..)) || execution(* com.hs.framework.directory.context.OrgContext.update*(..))"/> 
+		<aop:advisor advice-ref="txOrgAdvice" pointcut-ref="requiredOrgTx" /> 
+	</aop:config>
+
+</beans>

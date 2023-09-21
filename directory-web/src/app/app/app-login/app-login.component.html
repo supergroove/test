@@ -1,0 +1,16 @@
+<a mat-fab
+    class="setting-button"
+    data-automation-id="settings"
+    href=""
+    routerLink="/settings"
+    color="accent">
+    <mat-icon>settings</mat-icon>
+</a>
+
+<adf-login
+    [showLoginActions]="false"
+    [showRememberMe]="false"
+    [copyrightText]="'application.copyright' | adfAppConfig | translate"
+    (success)="onLogin()"
+    (error)="onError($event)">
+</adf-login>

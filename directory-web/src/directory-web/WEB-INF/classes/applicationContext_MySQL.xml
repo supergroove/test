@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang.xsd">
+
+	<bean id="orgConfigData" class="com.hs.framework.directory.config.OrgConfigData">
+		<property name="location" value="/WEB-INF/classes/context/directory.properties" />
+		<!--property name="ignoreUnresolvablePlaceholders" value="true" /-->
+	</bean>
+	<import resource="classpath:/context/datasource.xml" />
+	<import resource="classpath:/context/transaction.xml" />
+	<!--import resource="classpath:/context/directory.xml" /-->
+	<import resource="classpath:/context/directory_MySQL.xml" />
+	<!--import resource="classpath:/context/directory-mng.xml" /-->
+	<import resource="classpath:/context/directory-mng_MySQL.xml" />
+</beans>

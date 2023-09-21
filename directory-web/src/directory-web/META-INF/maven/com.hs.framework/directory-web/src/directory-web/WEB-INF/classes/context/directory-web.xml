@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/lang
+        http://www.springframework.org/schema/lang/spring-lang.xsd">
+
+	<!-- ========================= RESOLVER ========================= -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/directory/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- ========================= URL MAPPING ========================= -->
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/org.do">orgController</prop>
+				<prop key="/orgMng.do">orgMngController</prop>
+				<prop key="/sso.do">ssoController</prop>
+				<prop key="/OpenApi.do">openApiController</prop>
+			</props>
+		</property>
+	</bean>
+	<!-- ========================= Password Rules ========================= -->
+	<bean id="orgPasswordRules" class="com.hs.framework.directory.context.impl.PasswordRulesImpl"/>
+	<!-- ========================= CONTROLLER DEFINITIONS ========================= -->
+	<bean id="orgController" class="com.hs.framework.directory.webmvc.controller.OrgController">
+		<property name="methodNameResolver">
+			<bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+				<property name="paramName" value="acton" />
+				<property name="defaultMethodName" value="main" />
+			</bean>
+		</property>
+		<property name="orgContext" ref="orgContext" />
+		<property name="passwordRules" ref="orgPasswordRules"/>
+		<property name="orgFolder" ref="orgFolder"/>
+	</bean>
+	<bean id="orgMngController" class="com.hs.framework.directory.webmvc.controller.OrgMngController">
+		<property name="methodNameResolver">
+			<bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+				<property name="paramName" value="acton" />
+				<property name="defaultMethodName" value="orgMng" />
+			</bean>
+		</property>
+		<property name="orgContext" ref="orgContext" />
+		<property name="orgMngContext" ref="orgMngContext" />
+		<property name="orgFolder" ref="orgFolder"/>
+	</bean>
+	<bean id="ssoController" class="com.hs.framework.directory.webmvc.controller.SSOController">
+		<property name="methodNameResolver">
+			<bean class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+				<property name="paramName" value="acton" />
+				<property name="defaultMethodName" value="getAuthenticationByEmail" />
+			</bean>
+		</property>
+		<property name="orgContext" ref="orgContext" />
+	</bean>
+	<!-- for scheduler -->
+	<bean name="orgBatchInfoJob" class="com.hs.framework.directory.schedule.BatchInfoJob"/>
+	<bean name="orgBatchJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgMngContext" />
+		<property name="targetMethod" value="runBatchProcess" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean name="orgAddBatchJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgMngContext" />
+		<property name="targetMethod" value="runAddBatchProcess" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean name="orgAbsenceJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgContext" />
+		<property name="targetMethod" value="processAbsFlag" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean name="orgBatchAbsenceJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="orgMngContext" />
+		<property name="targetMethod" value="runBatchAbsenceProcess" />
+		<property name="concurrent" value="false" />
+	</bean>
+	<bean id="orgBatchJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="orgBatchJob"/>
+	  <property name="cronExpression">
+	    <!-- run 0,30 minute every hours -->
+	    <value>0 0,30 * * * ?</value>
+	  </property>
+	</bean>
+	<bean id="orgAddBatchJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="orgAddBatchJob"/>
+	  <property name="cronExpression">
+	    <!-- run 25,55 minute every hours -->
+	    <value>0 25,55 * * * ?</value>
+	  </property>
+	</bean>
+	<bean id="orgAbsenceJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="orgAbsenceJob"/>
+	  <property name="cronExpression">
+	    <!-- run 1,11,21,31,41,51 minute every hour, the absence's date is set at intervals of 10 minutes,
+	    the cron thread have a 1 minute interval.-->
+	    <value>0 1,11,21,31,41,51 * * * ?</value>
+	  </property>
+	</bean>
+	<bean id="orgBatchAbsenceJobCronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="orgBatchAbsenceJob"/>
+	  <property name="cronExpression">
+	    <!-- run every 10 minutes -->
+	    <value>0 0/10 * * * ?</value>
+	  </property>
+	</bean>
+	<bean id="schedulerFactory"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="orgAbsenceJobCronTrigger" />
+				<ref local="orgBatchJobCronTrigger" />
+				<ref local="orgAddBatchJobCronTrigger" />		
+				<ref local="orgBatchAbsenceJobCronTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+	<!-- ========================= Open API ========================= -->
+	<bean id="openApiController" class="com.hs.framework.directory.webmvc.controller.OpenApiController">
+		<property name="orgContext" ref="orgContext" />
+		<property name="messageSource" ref="orgMessageSource" />
+	</bean>
+	
+	<!-- ========================= License Manager ========================= -->
+	<bean id="licenseManager" class="com.hs.framework.directory.common.license.LicenseManager">
+		<property name="orgContext" ref="orgContext" />
+		<property name="orgFolder" ref="orgFolder"/>
+		<property name="messageSource" ref="orgMessageSource" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/lang 
+		http://www.springframework.org/schema/lang/spring-lang.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+	
+	<!-- oracle sample for the dbcp -->
+	<!--	
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>oracle.jdbc.driver.OracleDriver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:oracle:thin:@172.17.0.2:1521:xe</value>
+		</property>
+		<property name="username">
+			<value>bgf</value>
+		</property>
+		<property name="password">
+			<value>bgf</value>
+		</property>
+        <property name="maxActive">
+        	<value>10</value>
+        </property>
+        <property name="maxIdle">
+        	<value>5</value>
+        </property>
+        <property name="maxWait">
+        	<value>1000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+        	<value>600000</value>
+        </property>
+	</bean>
+    -->
+
+    <bean id="dataSource" class="com.hf.bpm.configuration.SecureConnectionPoolForBPM">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="jdbc:oracle:thin:@172.17.0.2:1521:xe"/>
+        <property name="username" value="bgf" />
+        <property name="password" value="Omk9TjpUOm82bEw=" /> 
+        <property name="initialSize" value="3"/>                      <!-- 초기 pool size -->
+        <property name="maxActive" value="10" />                       <!-- 최대 pool size -->
+        <property name="validationQuery" value="select 1 from dual"/>  <!-- 커넥션 테스크 쿼리 -->
+        <property name="testWhileIdle" value="true"/>                  <!-- 커넥션이 Idle 일때만 검사 -->
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/> <!-- 30초에 한번씩 확인 -->
+    </bean>    
+
+    <!-- mysql sample for the dbcp -->
+    <!--
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName">
+        	<value>com.mysql.jdbc.Driver</value>
+		</property> 
+        <property name="url">
+            <value>jdbc:mysql://localhost:3306/directory?autoReconnect=true</value>
+        </property>
+        <property name="username">
+            <value>root</value>
+        </property>
+        <property name="password">
+            <value>minhngoc</value>
+        </property>
+        <property name="maxActive">
+        	<value>10</value>
+        </property>
+        <property name="maxIdle">
+        	<value>5</value>
+        </property>
+        <property name="maxWait">
+        	<value>1000</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+        	<value>600000</value>
+        </property>
+    </bean>
+	-->
+    <!-- sample for the jndi --> 
+	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+	    <property name="jndiName" value="java:/comp/env/DirectoryDataSource" />
+	</bean> -->
+ </beans>

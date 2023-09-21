@@ -1,0 +1,26 @@
+@import "./app/app-layout/app-layout.component";
+@import "./app/app-layout/app-layout-global.component";
+@import "./app/app-login/app-login.component";
+@import "./app/header/header-menu.component";
+@import "./app/settings/settings-dialog.component";
+@import "./dashboard/dashboard.module";
+@import "./process-editor/process-editor.module";
+@import "./project-editor/project-editor.module";
+@import "./connector-editor/connector-editor.module";
+@import "./app/app-layout/logging/components/log-history/log-history.component";
+@import "./app/app-layout/editor-footer/editor-footer.component";
+
+@mixin ama-theme($theme) {
+    @include ama-layout-global-theme($theme);
+    @include ama-app-login($theme);
+    @include ama-layout-theme($theme);
+    @include ama-header-menu($theme);
+    @include adf-dialog-theme($theme);
+    @include ama-dashboard-module($theme);
+    @include ama-process-editor-module($theme);
+    @include ama-project-editor-module($theme);
+    @include ama-connector-editor-module($theme);
+    @include ama-log-history($theme);
+    @include ama-editor-footer($theme);
+    @include ama-editor-footer($theme);
+}

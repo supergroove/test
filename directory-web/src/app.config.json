@@ -1,0 +1,107 @@
+{
+    "$schema": "../node_modules/@alfresco/adf-core/app.config.schema.json",
+    "authType": "OAUTH",
+    "showNotificationHistory": true,
+    "providers": "BPM",
+    "bpmHost": "http://localhost:4201",
+    "identityHost": "${IDENTITY_HOST}",
+    "oauth2": {
+        "host": "${OAUTH_HOST}",
+        "authPath": "/protocol/openid-connect/token/",
+        "clientId": "activiti",
+        "scope": "openid",
+        "secret": "",
+        "implicitFlow": true,
+        "silentLogin": true,
+        "redirectSilentIframeUri": "",
+        "redirectUri": "/",
+        "redirectUriLogout": "/#/login"
+    },
+    "notificationDefaultDuration": "4000",
+    "logLevel": "trace",
+    "application": {
+        "name": "Activiti Modeling Application"
+    },
+    "languagePicker": true,
+    "roles": ["ACTIVITI_MODELER"],
+    "locale": "en",
+    "languages": [
+        {
+            "key": "en",
+            "label": "English"
+        },
+        {
+            "key": "ja",
+            "label": "Japanese"
+        }
+    ],
+    "process-modeler": {
+        "priorities": [
+            {
+                "key": 0,
+                "label": "PROCESS_EDITOR.PRIORITIES.LOW"
+            },
+            {
+                "key": 1,
+                "label": "PROCESS_EDITOR.PRIORITIES.MEDIUM"
+            },
+            {
+                "key": 2,
+                "label": "PROCESS_EDITOR.PRIORITIES.HIGH"
+            }
+        ],
+        "timer-types": [
+            {
+                "key": "timeCycle",
+                "label": "PROCESS_EDITOR.TIMER_TYPES.CYCLE"
+            },
+            {
+                "key": "timeDuration",
+                "label": "PROCESS_EDITOR.TIMER_TYPES.DURATION"
+            },
+            {
+                "key": "timeDate",
+                "label": "PROCESS_EDITOR.TIMER_TYPES.DATE"
+            }
+        ],
+        "multi-instance-types": [
+            {
+                "key": "none",
+                "label": "PROCESS_EDITOR.MULTI_INSTANCE_TYPES.NONE"
+            },
+            {
+                "key": "parallel",
+                "label": "PROCESS_EDITOR.MULTI_INSTANCE_TYPES.PARALLEL"
+            },
+            {
+                "key": "sequence",
+                "label": "PROCESS_EDITOR.MULTI_INSTANCE_TYPES.SEQUENCE"
+            }
+        ]
+    },
+    "navigation": {
+        "main": [
+            {
+                "icon": "apps",
+                "label": "DASHBOARD.NAVIGATION.PROJECTS.LABEL",
+                "title": "DASHBOARD.NAVIGATION.PROJECTS.TOOLTIP",
+                "disabled": false,
+                "route": {
+                    "url": "/dashboard/projects"
+                }
+            }
+        ]
+    },
+    "create": [
+        {
+            "title": "DASHBOARD.NEW_MENU.MENU_ITEMS.CREATE_PROJECT",
+            "icon": "create_new_folder",
+            "handler": "CREATE_PROJECT_DIALOG"
+        },
+        {
+            "title": "DASHBOARD.NEW_MENU.MENU_ITEMS.UPLOAD_PROJECT",
+            "icon": "file_upload",
+            "handler": "IMPORT_PROJECT_DIALOG"
+        }
+    ]
+}

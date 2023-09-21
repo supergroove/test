@@ -1,0 +1,35 @@
+@mixin ama-upload-file-button($theme) {
+    $primary: map-get($theme, primary);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+
+    .adf-textitem-readonly .adf-textitem-icon {
+        top: 0;
+        padding-left: 0;
+    }
+
+    .adf-textitem-editable .mat-input-element {
+        font-size: 14px;
+    }
+
+    .ama-upload-button {
+        input[type="file"] {
+            display: none;
+        }
+
+        .deafult-upload-button {
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            line-height: 25px;
+            text-align: left;
+            padding-left: 25px;
+
+            mat-icon {
+                font-size: 18px;
+                color: mat-color($foreground, icons);
+                line-height: 25px;
+            }
+        }
+    }
+}
